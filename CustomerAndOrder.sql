@@ -1,35 +1,59 @@
---UC1--
-create database Services;
+CREATE DATABASE MyStore;
 
---UC2-
-use Services;
-create table Customer(Customer_Id int Identity(1,1),Customer_Name varchar(50),Phone bigint,Address varchar(200));
-select * from Customer;
+USE MyStore;
 
---UC3--
-insert into Customer values('Madhur Verma',8295475016,'16th old OHBC Colony'),('Karan Depale',9872346737,'house no 17 TDI City'),('Sahil Arora',9562387127,'Bloch No 9 Ansal City');
+CREATE TABLE Customer (
+    CustomerId INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerName NVARCHAR(50),
+    Phone NVARCHAR(15),
+    Address NVARCHAR(100)
+);
 
---UC4--
-alter table Customer add Country varchar(50),Salary bigint,Pincode bigint;
-update Customer set Country='India',Salary=25000,Pincode=132103;
 
---UC5--
-update Customer set Salary=60000,Pincode=203567 Where Customer_Name='Madhur Verma';
-update Customer set Salary=55000,Pincode=267845 Where Customer_Name='Karan Depale';
+INSERT INTO Customer (CustomerName, Phone, Address)
+VALUES
+    ('priyanka', '8179664954', '376 stvnagar'),
+    ('prasanya ', '91277635262', '372 tilak road'),
+    ('pujita', '9012667899', '375 vvmahal road');
 
---UC6--
-select COUNT(Customer_Id) as Number_Of_Customers from Customer Where Country='India';
+	ALTER TABLE Customer
+ADD Country NVARCHAR(50),
+    Salary DECIMAL(10, 2),
+    Pincode NVARCHAR(10);
 
---UC7--
-select MAX(Salary) from Customer;
-select MIN(Salary) from Customer;
-select SUM(Salary) from Customer;
-select AVG(Salary) from Customer;
+	select *from Customer;
 
---UC8--
-use Services;
-create table Orders(Order_Id int ,Product_Name varchar(20),Quantity bigint,Rating int);
+ 
+UPDATE Customer
+SET Country = 'India',
+    Salary = 600000.00,
+    Pincode = '517501'
+WHERE CustomerName = 'priyanka';
 
---UC9--
-select * from Customer;
-select * from Orders;
+
+
+UPDATE Customer
+SET Salary = 200000.00
+WHERE CustomerName = 'priyanka';
+
+SELECT Country, COUNT(*) AS NumberOfCustomers
+FROM Customer
+GROUP BY Country;
+
+SELECT
+    MAX(Salary) AS MaxSalary,
+    MIN(Salary) AS MinSalary,
+    SUM(Salary) AS TotalSalary,
+    AVG(Salary) AS AvgSalary
+FROM Customer;
+
+CREATE TABLE Orders (
+    OrderId INT IDENTITY(1,1) PRIMARY KEY,
+    ProductName NVARCHAR(50),
+    Quantity INT,
+    Rating INT
+);
+
+SELECT * FROM Customer;
+SELECT * FROM Orders;
+
